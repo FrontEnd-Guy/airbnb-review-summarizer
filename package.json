@@ -1,0 +1,18 @@
+{
+  "name": "airbnb-review-summarizer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pavel Zakharov",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "axios": "^1.6.5",
+    "base-64": "^1.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "https": "^1.0.0",
+    "puppeteer": "^21.7.0"
+  }
+}
