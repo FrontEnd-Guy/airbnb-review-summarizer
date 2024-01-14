@@ -2,6 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const cors = require('cors');
+const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
@@ -13,7 +14,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+const genAI = new GoogleGenerativeAI("AIzaSyDvtAHpbFjwaytqFl1MaFChnHwPNmCUIdg");
 
 app.use(express.json());
 
@@ -32,11 +33,12 @@ app.post('/summarize', async (req, res) => {
       return res.status(400).send('Provided URL is not a valid Airbnb listing link.');
     }
 
-    const { comments, reviewsCount } = await fetchAllReviewComments(listingId); // Измените это
+    const { comments, reviewsCount } = await fetchAllReviewComments(listingId);
     const summary = await summarizeReviews(comments);
     res.json({ summary, totalReviews: reviewsCount});
   } catch (error) {
     res.status(500).send('An error occurred while processing the request.');
+    console.log(error)
   }
 });
 
@@ -62,16 +64,13 @@ async function fetchAllReviewComments(listingId) {
   const comments = [];
   do {
     const offset = page * pageSize;
-    const response = await fetch(
-      `https://www.airbnb.com/api/v2/homes_pdp_reviews?key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&listing_id=${listingId}&limit=${pageSize}&offset=${offset}`
-    );
-    const json = await response.json();
-    const pageComments = json.reviews.map(review => review.comments);
+    const response = await axios.get(`https://www.airbnb.com/api/v2/homes_pdp_reviews?key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&listing_id=${listingId}&limit=${pageSize}&offset=${offset}`);
+    const pageComments = response.data.reviews.map(review => review.comments);
     comments.push(...pageComments);
-    reviewsCount = json.metadata.reviews_count;
+    reviewsCount = response.data.metadata.reviews_count;
     page++;
   } while (page * pageSize < reviewsCount);
-    return { comments, reviewsCount }; 
+  return { comments, reviewsCount }; 
 }
 
 async function summarizeReviews(reviews) {
