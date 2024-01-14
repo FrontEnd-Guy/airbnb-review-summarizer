@@ -1,3 +1,4 @@
+global.fetch = require('node-fetch');
 const express = require('express');
 const puppeteer = require('puppeteer');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
