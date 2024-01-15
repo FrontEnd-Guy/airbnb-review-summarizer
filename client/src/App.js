@@ -4,22 +4,21 @@ import MarkdownViewer from './MarkdownViewer';
 import './App.scss';
 
 function App() {
-  const [summary, setSummary] = useState('');
-  const [totalReviews, setTotalReviews] = useState(null);
+  const [reviewData, setReviewData] = useState({ summary: '', totalReviews: null });
   const [url, setUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSummarize = async () => {
     setIsLoading(true);
-    setTotalReviews(null);
-    setSummary('');
+    setError('');
+    setReviewData({ summary: '', totalReviews: null });
+
     try {
       const response = await axios.post('https://api.aibnbsummaries.com/summarize/', { url });
-      setSummary(response.data.summary);
-      setTotalReviews(response.data.totalReviews);
+      setReviewData({ summary: response.data.summary, totalReviews: response.data.totalReviews });
     } catch (error) {
-      console.error('Error fetching summary:', error);
-      setSummary('Error fetching summary.');
+      setError(error.response.data.message || 'Error fetching summary.');
     } finally {
       setIsLoading(false);
     }
@@ -42,12 +41,16 @@ function App() {
           {isLoading ? 'Loading...' : 'Summarize'}
         </button>
       </div>
-      {summary && (
+      {error && <div className="error-message">{error}</div>}
+      {reviewData.summary && (
         <div className="summary-container">
-          <h2>What <span>{totalReviews}</span> People Say:</h2>
-          <MarkdownViewer markdownText={summary} />
+          <h2>What <span>{reviewData.totalReviews}</span> People Say:</h2>
+          <MarkdownViewer markdownText={reviewData.summary} />
         </div>
       )}
+      <footer>
+        <p>&copy; {new Date().getFullYear()} Pavel Zakharov. AIbnb Summaries</p>
+      </footer>
     </div>
   );
 }
