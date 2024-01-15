@@ -5,16 +5,16 @@ FROM node:16-alpine
 WORKDIR /app
 
 # Копирование файлов package.json и package-lock.json из папки server
-COPY server/package*.json ./
+COPY package*.json ./
 
 # Установка зависимостей
 RUN npm ci
 
 # Копирование исходного кода проекта в контейнер
-COPY server/ ./
+COPY . ./
 
 # Копирование файла .env в контейнер
-COPY server/.env ./
+COPY .env ./
 
 # Переменная окружения для порта
 ENV PORT=3001

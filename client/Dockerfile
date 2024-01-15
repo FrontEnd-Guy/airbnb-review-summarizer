@@ -5,13 +5,13 @@ FROM node:16-alpine as build
 WORKDIR /app
 
 # Копирование файлов package.json и package-lock.json
-COPY client/package*.json ./
+COPY package*.json ./
 
 # Установка зависимостей
 RUN npm install
 
 # Копирование исходного кода приложения
-COPY client/ ./
+COPY . ./
 
 # Сборка приложения
 RUN npm run build
@@ -23,7 +23,7 @@ FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Копируем файл конфигурации Nginx в контейнер
-COPY client/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Открываем порт 80
 EXPOSE 80
