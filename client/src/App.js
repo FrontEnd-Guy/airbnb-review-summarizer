@@ -15,7 +15,7 @@ function App() {
     setReviewData({ summary: '', totalReviews: null });
 
     try {
-      const response = await axios.post('https://api.aibnbsummaries.com/summarize/', { url });
+      const response = await axios.post('https://api.deepsummaries.com/summarize/', { url });
       setReviewData({ summary: response.data.summary, totalReviews: response.data.totalReviews });
     } catch (error) {
       setError(error.response.data.message || 'Error fetching summary.');
