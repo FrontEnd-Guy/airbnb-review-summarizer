@@ -49,7 +49,7 @@ function App() {
         </div>
       )}
       <footer>
-        <p>&copy; {new Date().getFullYear()} Pavel Zakharov. AIbnb Summaries</p>
+        <p>&copy; {new Date().getFullYear()} DeepSummaries </p>
       </footer>
     </div>
   );

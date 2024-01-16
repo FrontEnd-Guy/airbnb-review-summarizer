@@ -1,9 +1,14 @@
 .app {
-  font-family: 'Circular', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   color: #484848;
-  padding: 20px;
+  padding: 0 20px;
   max-width: 800px;
   margin: 0 auto;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
 
   .header {
     text-align: center;
@@ -17,39 +22,42 @@
   .input-group {
     display: flex;
     margin-bottom: 20px;
+    border-radius: 4px;
+    transition: box-shadow 0.3s, transform 0.3s;
+    overflow: hidden;
+
+    .url-input, .summarize-button {
+      border-radius: 0;
+    }
 
     .url-input {
       all: unset;
       flex-grow: 1;
-      border: 2px solid #ddd;
-      border-radius: 4px;
-      margin-right: -1px;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      width: 100%;
+      border: 1px solid #ddd;
       padding: 10px;
       box-sizing: border-box;
+      margin-right: -1px;
 
-      &:focus {
-        border-color: #FF5A5F;
-      }
+      // &:focus {
+      //   border-color: #FF5A5F;
+      // }
+    }
+
+    &:focus-within {
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transform: scale(1.05);
     }
 
     .summarize-button {
       padding: 10px 20px;
-      background-color: #FF5A5F; // Красный фон кнопки
+      background-color: #FF5A5F;
       border: none;
-      border-radius: 4px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
       color: white;
       cursor: pointer;
       font-size: 16px;
+
       &:hover {
-        background-color: darken(#FF5A5F, 10%); // Темнее при наведении
-      }
-      &:disabled {
-        background-color: #ccc;
+        background-color: darken(#FF5A5F, 10%);
       }
     }
   }
@@ -64,6 +72,11 @@
     padding: 20px;
     border-radius: 4px;
     border: 1px solid #ddd;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
 
     h2 {
       color: #484848;
@@ -72,14 +85,14 @@
     span {
       color: #FF5A5F;
     }
-
   }
+
   footer {
     text-align: center;
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #ddd;
-  
+
     p {
       color: #888;
       font-size: 14px;
