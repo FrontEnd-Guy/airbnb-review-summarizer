@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import MarkdownViewer from './MarkdownViewer';
+import MarkdownViewer from './components/MarkdownViewer';
+import useUrlValidator from './hooks/useUrlValidator';
+import { SUMMARIZE_API_URL } from './utils/apiConstants';
+
 import './App.scss';
 
 function App() {
-  const [reviewData, setReviewData] = useState({ summary: '', totalReviews: null });
   const [url, setUrl] = useState('');
+  const [reviewData, setReviewData] = useState({ summary: '', totalReviews: null });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const { isUrlValid } = useUrlValidator(url);
+
+  const handleChange = (e) => {
+    setUrl(e.target.value);
+  };
+
   const handleSummarize = async () => {
+    if (!isUrlValid) {
+      setError('Please enter a valid URL.');
+      return;
+    }
+
     setIsLoading(true);
     setError('');
     setReviewData({ summary: '', totalReviews: null });
 
     try {
-      const response = await axios.post('https://api.deepsummaries.com/summarize/', { url });
+      const response = await axios.post(SUMMARIZE_API_URL, { url });
       setReviewData({ summary: response.data.summary, totalReviews: response.data.totalReviews });
     } catch (error) {
-      setError(error.response.data.message || 'Error fetching summary.');
+      setError(error.response?.data.error || 'Error fetching summary.');
     } finally {
       setIsLoading(false);
     }
@@ -30,15 +44,15 @@ function App() {
         <h1>Airbnb Review Summarizer</h1>
       </div>
       <div className="input-group">
-        <input
+      <input
           type="url"
           value={url}
-          onChange={e => setUrl(e.target.value)}
+          onChange={handleChange}
           placeholder="Paste listing URL here"
-          className="url-input"
+          className={`url-input ${!isUrlValid && url ? 'invalid' : ''}`}
         />
-        <button onClick={handleSummarize} disabled={isLoading} className="summarize-button">
-          {isLoading ? 'Loading...' : 'Summarize'}
+        <button onClick={handleSummarize} disabled={isLoading || !isUrlValid} className="summarize-button">
+          {isLoading ? 'Loading...' : 'Summarize' }
         </button>
       </div>
       {error && <div className="error-message">{error}</div>}
