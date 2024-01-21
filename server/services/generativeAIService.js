@@ -6,8 +6,10 @@ async function summarizeReviews(reviews) {
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
   let prompt = "I've collected some reviews from an Airbnb I'm considering staying at. Please summarize the reviews in a structured format focusing on what guests generally like (Pros) and dislike (Cons). The reviews are below:\n";
+  let reviewNumber = 1;
   for (const review of reviews) {
-    prompt += '\n' + review;
+    prompt += '\n' + reviewNumber + ". " + review;
+    reviewNumber++;
   }
 
   try {
