@@ -4,7 +4,7 @@
 ## About
 Traveling is a big passion of mine, alongside coding. When looking for accommodations, I often rely on reviews, as they tend to reveal more than the listing descriptions. But sifting through all of them can be time-consuming, especially for listings with dozens or even hundreds of reviews. To make this process easier, I developed an app that summarizes the reviews for me.
 
-[![Deep Summaries Screenshot](https://github.com/FrontEnd-Guy/airbnb-review-summarizer/assets/105168167/e81f241e-2e21-44fe-8bf4-e0b66f0d9d93)](http://deepsummaries.com)
+[![Deep Summaries Screenshot](https://github.com/FrontEnd-Guy/airbnb-review-summarizer/assets/105168167/831931cd-ace3-4b27-b5cf-3b38e6cd8f41)](http://deepsummaries.com)
 
 ## How it Works
 The app extracts online reviews and feeds them into a model that can summarize these reviews, saving you the trouble of reading each one. If you've ever used ChatGPT, you've interacted with what's known as a Large Language Model (LLM). These Deep Learning models are trained to process, understand, and generate language. Think of LLMs as advanced autocomplete tools, capable of crafting not just a word or a sentence, but entire paragraphs or essays.
