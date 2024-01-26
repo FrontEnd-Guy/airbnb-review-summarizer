@@ -30,9 +30,18 @@ class InternalServerError extends Error {
   }
 }
 
+class NoReviewsError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "NoReviewsError";
+    this.statusCode = 400;
+  }
+}
+
 module.exports = {
   ValidationError,
   ReviewParsingError,
   SummaryGenerationError,
-  InternalServerError
+  InternalServerError,
+  NoReviewsError
 };

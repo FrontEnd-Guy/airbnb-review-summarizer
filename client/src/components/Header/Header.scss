@@ -1,21 +1,29 @@
 .header {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  .header__logo-container {
+  .logo-container {
     display: flex;
     gap: 10px;
     align-items: center;
 
-    .header__logo {
-      width: 60px;
-      height: 60px;
+    .logo {
+      width: 48px;
+      height: 48px;
       color: var(--primary-color);
     }
 
     p {
-      font-weight: 900;
+      font-family: 'Roboto Mono', monospace;
+      font-weight: 700;
       text-align: left;
-      font-size: 20px;
+      font-size: 16px;
+      line-height: 1.2; 
     }
+  }
+
+  .link {
+    margin-left: 15px;
   }
 }

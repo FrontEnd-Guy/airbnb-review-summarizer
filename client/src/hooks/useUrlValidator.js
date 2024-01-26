@@ -1,6 +1,10 @@
 const useUrlValidator = (url) => {
   const validateUrl = (inputUrl) => {
-    const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?$/i;
+    if (!inputUrl.trim()) {
+      return false;
+    }
+
+    const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w- ./?%&=]*)?$/i;
     return urlPattern.test(inputUrl);
   };
 

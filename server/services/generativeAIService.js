@@ -1,8 +1,13 @@
 const { SummaryGenerationError } = require('../errors/customErrors');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { NoReviewsError } = require('../errors/customErrors');
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 async function summarizeReviews(reviews) {
+  if (reviews.length === 0) {
+    throw new NoReviewsError('No reviews available to summarize.');
+  }
+
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
   let prompt = "I've collected some reviews from an Airbnb I'm considering staying at. Please summarize the reviews in a structured format focusing on what guests generally like (Pros) and dislike (Cons). The reviews are below:\n";

@@ -1,126 +1,35 @@
-// Стили приложения
 .app {
   color: var(--text-color);
+  font-size: 16px; 
+  line-height: 1.6;
   padding: 10px 20px;
   max-width: 800px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  .link {
+    position: relative;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-block;
   
-  // Сообщение об ошибке
-  .error-message {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    text-align: center;
-    background-color: var(--primary-color-light);
-    color: var(--error-color);
-  }
-
-  // Контейнер с суммарной информацией
-  .summary-container {
-    background-color: var(--background-color);
-    padding: 20px;
-    border-radius: 1rem;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.95);
-    margin-bottom: 20px;
-    h3 {
-      color: var(--text-color);
-      margin: 0;
-      padding: 0;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0; 
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-color);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
   
-      span {
-        color: var(--primary-color);
-      }
+    &:hover::after {
+      opacity: 1;
     }
   }
+  
 }
-
-.container {
-  width: 100%;
-  padding-top: 2rem;
-  padding-bottom: 3rem;
-}
-
-.form {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
-
-.input-container {
-  position: relative;
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  border: 1px solid #ccc;
-  border-radius: 1rem;
-  background-color: var(--background-color);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.95);
-  padding: 0 40px;
-  transition: box-shadow 0.3s;
-
-  &:focus-within {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  }
-
-  input {
-    width: 100%;
-    padding-right: 1rem;
-    border: none;
-    background-color: transparent;
-    height: 52px;
-    max-height: 200px;
-    overflow-y: hidden;
-    transition: box-shadow 0.3s;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .paste-button, .send-button {
-    all: unset;
-    padding: 3px;
-    width: 28px;
-    height: 28px;
-    border-radius: .5rem;
-    cursor: pointer;
-    position: absolute;
-    bottom: 50%;
-    transform: translateY(50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: default;
-    }
-  }
-
-  .paste-button {
-    padding: 0;
-    left: 0.5rem;
-    transition: all .3s ease-in-out;
-
-    &:hover {
-      opacity: .8;
-    }
-  }
-
-  .send-button {
-    right: 0.5rem;
-    background-color: var(--primary-color);
-    transition: all .3s ease-in-out;
-    
-    &:hover {
-      background-color: var(--primary-color-dark);
-    }
-
-  }
-}
-
-
