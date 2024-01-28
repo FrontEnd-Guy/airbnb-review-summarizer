@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #E91E63; /* Deep Pink */
+  --primary-color-light: #fdeff3; /* Lighter Shade of Deep Pink */
+  --primary-color-dark: #e3004a; /* Darker Shade of Deep Pink */
+  --background-color: #fff; /* White Background */
+  --text-color: #0a0a21; /* Dark Text, kept as original */
+  --error-color: #D8000C;
+  --border-color: #ddd; /* Border Color, kept as original */
+  --footer-color: #888; /* Footer Color, kept as original */
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+}
