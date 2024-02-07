@@ -4,17 +4,24 @@ import './SummaryDisplay.scss';
 import MarkdownViewer from '../MarkdownViewer/MarkdownViewer';
 
 const SummaryDisplay = () => {
-  const { totalReviews, summary, url } = useSelector((state) => state.summary.currentSummary);
+  const { totalReviews, summary, url, image, name } = useSelector(
+    (state) => state.summary.currentSummary,
+  );
 
   return (
     <section className="summary-container">
-      <h3>
-        What <span>{totalReviews}</span> People Say:
-      </h3>
-      <MarkdownViewer markdownText={summary} />
-      <a href={url} target="_blank" rel="noopener noreferrer" className="listing-link">
-        View Original Listing
-      </a>
+      <img src={image} alt={name} />
+      <div>
+        <h2>
+          What <span>{totalReviews}</span> People Say About
+          <br />
+          <span>{name}</span>
+        </h2>
+        <MarkdownViewer markdownText={summary} />
+        <a href={url} target="_blank" rel="noopener noreferrer" className="listing-link">
+          View Original Listing
+        </a>
+      </div>
     </section>
   );
 };

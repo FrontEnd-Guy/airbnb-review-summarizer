@@ -114,9 +114,7 @@ const SummaryForm = () => {
             />
           </svg>
         </button>
-        {isFocused && history.length > 0 && (
-          <HistoryList onItemSelect={handleHistoryItemClick} onClose={() => setIsFocused(false)} />
-        )}
+        {isFocused && history.length > 0 && <HistoryList onItemSelect={handleHistoryItemClick} />}
       </div>
     </form>
   );

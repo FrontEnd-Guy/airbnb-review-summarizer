@@ -2,6 +2,7 @@
   background-color: white;
   max-height: 200px;
   overflow-y: auto;
+  transition: max-height 0.5s ease-out;
 
   h3 {
     color: var(--footer-color);

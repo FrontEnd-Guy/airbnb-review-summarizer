@@ -2,7 +2,7 @@ import React from 'react';
 import './Title.scss';
 
 const Title = ({ text, className }) => {
-  return <h2 className={`title ${className}`}>{text}</h2>;
+  return <h1 className={`title ${className}`}>{text}</h1>;
 };
 
 export default Title;

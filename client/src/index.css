@@ -3,14 +3,14 @@
 }
 
 :root {
-  --primary-color: #E91E63; /* Deep Pink */
-  --primary-color-light: #fdeff3; /* Lighter Shade of Deep Pink */
-  --primary-color-dark: #e3004a; /* Darker Shade of Deep Pink */
-  --background-color: #fff; /* White Background */
-  --text-color: #0a0a21; /* Dark Text, kept as original */
+  --primary-color: #E91E63;
+  --primary-color-light: #fdeff3;
+  --primary-color-dark: #e3004a;
+  --background-color: #fff;
+  --text-color: #0a0a21;
   --error-color: #D8000C;
-  --border-color: #ddd; /* Border Color, kept as original */
-  --footer-color: #888; /* Footer Color, kept as original */
+  --border-color: #ddd;
+  --footer-color: #888;
 }
 
 
