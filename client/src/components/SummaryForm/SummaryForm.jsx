@@ -52,8 +52,8 @@ const SummaryForm = () => {
   };
 
   return (
-    <form ref={formRef} className="form" onSubmit={handleSubmit}>
-      <div className="input-container">
+    <form className="form" onSubmit={handleSubmit}>
+      <div ref={formRef} className="input-container">
         <input
           type="text"
           placeholder="Paste listing URL…"
