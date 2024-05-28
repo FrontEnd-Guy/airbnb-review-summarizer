@@ -8,7 +8,7 @@ async function summarizeReviews(reviews) {
     throw new NoReviewsError('No reviews available to summarize.');
   }
 
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
   let prompt = `
   Summarize the following reviews into two distinct lists titled 'Pros' and 'Cons'. 
