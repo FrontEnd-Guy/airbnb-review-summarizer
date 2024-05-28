@@ -35,7 +35,7 @@ async function summarizeReviews(reviews) {
   - [Negative aspect 1]
   - [Negative aspect 2]
 
-  Replace the placeholder text with actual points from the reviews. The points should be concise and directly extracted from the reviews where possible.
+  Replace the placeholder text with actual points from the reviews. The points should be concise and directly extracted from the reviews where possible. Keep the lists concise and limited to the most important points.  Limit each list to a maximum of 10 bullet points.
   `;
 
   try {
