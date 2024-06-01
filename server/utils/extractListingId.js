@@ -4,4 +4,4 @@ function extractListingId(url) {
   return match ? match[2] : null;
 }
 
-module.exports = extractListingId;
+export default extractListingId;

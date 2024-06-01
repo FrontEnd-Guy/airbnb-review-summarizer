@@ -38,7 +38,7 @@ class NoReviewsError extends Error {
   }
 }
 
-module.exports = {
+export {
   ValidationError,
   ReviewParsingError,
   SummaryGenerationError,

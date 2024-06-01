@@ -1,14 +1,12 @@
-global.fetch = require('node-fetch');
+import fetch from 'node-fetch';
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
 
-require('dotenv').config();
+import summaryRoutes from './routes/summaryRoutes.js'; 
+import errorHandler from './middlewares/errorHandler.js';
 
-const express = require('express');
-const cors = require('cors');
-
-const summaryRoutes = require('./routes/summaryRoutes');
-const errorHandler = require('./middlewares/errorHandler');
-
-const port = process.env.PORT || 3001; 
+const port = process.env.PORT || 3001;
 
 const app = express();
 

@@ -1,7 +1,6 @@
-const axios = require('axios');
-const { ReviewParsingError } = require('../errors/customErrors');
-
-require('dotenv').config();
+import axios from 'axios';
+import { ReviewParsingError } from '../errors/customErrors.js';
+import 'dotenv/config';
 
 async function getListingData(listingId) {
   try {
@@ -32,7 +31,7 @@ async function fetchAllReviewComments(listingId) {
   }
 }
 
-module.exports = {
+export default {
   getListingData,
   fetchAllReviewComments
 };

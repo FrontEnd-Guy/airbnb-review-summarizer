@@ -1,7 +1,7 @@
-const airbnbService = require('../services/airbnbService');
-const generativeAIService = require('../services/generativeAIService');
-const extractListingId = require('../utils/extractListingId');
-const { ValidationError } = require('../errors/customErrors');
+import airbnbService from '../services/airbnbService.js';
+import generativeAIService from '../services/generativeAIService.js';
+import extractListingId from '../utils/extractListingId.js';
+import { ValidationError } from '../errors/customErrors.js';
 
 async function summarize(req, res, next) {
   try {
@@ -13,12 +13,12 @@ async function summarize(req, res, next) {
     const { xl_picture_url, name, address, lat, lng } = await airbnbService.getListingData(listingId);
     const { comments, reviewsCount } = await airbnbService.fetchAllReviewComments(listingId);
     const summary = await generativeAIService.summarizeReviews(comments);
-    res.json({ summary, totalReviews: reviewsCount, image: xl_picture_url, name, address, lat, lng});
+    res.json({ summary, totalReviews: reviewsCount, image: xl_picture_url, name, address, lat, lng });
   } catch (error) {
     next(error);
   }
 }
 
-module.exports = {
+export {
   summarize,
 };

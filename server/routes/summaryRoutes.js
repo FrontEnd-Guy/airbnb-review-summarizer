@@ -1,7 +1,8 @@
-const express = require('express');
-const reviewsController = require('../controllers/reviewsController');
+import express from 'express';
+import { summarize } from '../controllers/reviewsController.js'; 
+
 const router = express.Router();
 
-router.post('/summarize', reviewsController.summarize);
+router.post('/summarize', summarize);
 
-module.exports = router;
+export default router;

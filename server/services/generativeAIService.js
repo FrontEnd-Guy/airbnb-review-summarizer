@@ -1,6 +1,6 @@
-const { SummaryGenerationError } = require('../errors/customErrors');
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { NoReviewsError } = require('../errors/customErrors');
+import { SummaryGenerationError, NoReviewsError } from '../errors/customErrors.js';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 async function summarizeReviews(reviews) {
@@ -48,7 +48,6 @@ async function summarizeReviews(reviews) {
   }
 }
 
-module.exports = {
+export default {
   summarizeReviews
 };
-
