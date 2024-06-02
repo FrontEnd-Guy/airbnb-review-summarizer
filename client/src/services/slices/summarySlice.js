@@ -14,7 +14,7 @@ export const fetchSummary = createAsyncThunk(
     }
 });
 
-const getDefaultSummary = () => ({ summary: '', totalReviews: null, image: '', name: '', address: '', lat: null, lng: null});
+const getDefaultSummary = () => ({ summary: { pros: [], cons: [] }, totalReviews: null, image: '', name: '', address: '', lat: null, lng: null});
 
 const persistedHistory = localStorage.getItem('history')
   ? JSON.parse(localStorage.getItem('history'))

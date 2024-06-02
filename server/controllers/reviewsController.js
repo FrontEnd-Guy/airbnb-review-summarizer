@@ -12,7 +12,14 @@ async function summarize(req, res, next) {
     }
     const { xl_picture_url, name, address, lat, lng } = await airbnbService.getListingData(listingId);
     const { comments, reviewsCount } = await airbnbService.fetchAllReviewComments(listingId);
-    const summary = await generativeAIService.summarizeReviews(comments);
+    const rawSummary = await generativeAIService.summarizeReviews(comments);
+    let summary;
+    try {
+      summary = JSON.parse(rawSummary.replace(/^```json|```$/g, '').trim());
+    } catch (parseError) {
+      console.error('Error parsing summary JSON:', parseError);
+      throw new Error('Failed to parse summary JSON');
+    }
     res.json({ summary, totalReviews: reviewsCount, image: xl_picture_url, name, address, lat, lng });
   } catch (error) {
     next(error);

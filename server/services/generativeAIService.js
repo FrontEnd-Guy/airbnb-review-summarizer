@@ -13,30 +13,38 @@ async function summarizeReviews(reviews) {
   let prompt = `
   Summarize the following reviews into two distinct lists titled 'Pros' and 'Cons'. 
   For 'Pros', list all the positive aspects mentioned in the reviews. 
-  For 'Cons', list all the negative aspects mentioned in the reviews. 
-  Format your response with 'Pros' and 'Cons' as headings and each point underneath as a bullet point. 
-  Do not mix positive and negative points in the same bullet. 
-  Start each point on a new line and make sure it is clearly categorized under the correct heading. 
-  The reviews are as follows:
-  `;
+  For 'Cons', list all the negative aspects mentioned in the reviews.
+  Format your response as a JSON object with keys 'pros' and 'cons'.
+  Do not mix positive and negative points in the same bullet.
+  Each point should be concise and directly extracted from the reviews where possible.
+  Limit each list to a maximum of 10 bullet points.
 
-  reviews.forEach((review, index) => {
-    prompt += `\nReview ${index + 1}: ${review}\n`;
-  });
+  YOU MUST NOT USE MARKDOWN NOR LATEX!
 
-  prompt += `
+  Here are the reviews:
+`;
+
+reviews.forEach((review, index) => {
+  prompt += `\nReview ${index + 1}: ${review}\n`;
+});
+
+prompt += `
   Based on these reviews, create a summary with the following format:
 
-  Pros:
-  - [Positive aspect 1]
-  - [Positive aspect 2]
+  {
+    "pros": [
+      "Positive aspect 1",
+      "Positive aspect 2"
+    ],
+    "cons": [
+      "Negative aspect 1",
+      "Negative aspect 2"
+    ]
+  }
 
-  Cons:
-  - [Negative aspect 1]
-  - [Negative aspect 2]
-
-  Replace the placeholder text with actual points from the reviews. The points should be concise and directly extracted from the reviews where possible. Keep the lists concise and limited to the most important points.  Limit each list to a maximum of 10 bullet points.
-  `;
+  Replace the placeholder text with actual points from the reviews.
+  Ensure the lists are concise and limited to the most important points.
+`;
 
   try {
     const result = await model.generateContent(prompt);

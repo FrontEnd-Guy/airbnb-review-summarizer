@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Airbnb Reviews Summary",
+  "description": "Displays a summary of reviews for the current Airbnb listing.",
+  "version": "1.0",
+  "permissions": ["activeTab", "storage"],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.airbnb.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}

@@ -16,7 +16,9 @@ const Main = () => {
       <SummaryForm />
       {isLoading && <Loader />}
       {error && <ErrorMessage error={error} />}
-      {currentSummary.summary && <SummaryDisplay summary={currentSummary} />}
+      {(currentSummary.summary.pros.length > 0 || currentSummary.summary.cons.length > 0) && (
+        <SummaryDisplay summary={currentSummary} />
+      )}
     </main>
   );
 };
