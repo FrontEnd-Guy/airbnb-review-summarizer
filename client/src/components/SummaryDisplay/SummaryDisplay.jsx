@@ -12,16 +12,14 @@ const SummaryDisplay = () => {
       <img src={image} alt={name} />
       <div>
         <h2>
-          What <span>{totalReviews}</span> People Say About
-          <br />
-          <span>{name}</span>
+          Summary of <span>{totalReviews}</span> Reviews for <span>{name}</span>
         </h2>
-        <h3>Pros:</h3>
+        <h3>People Like:</h3>
         <ul>
           {summary && summary.pros && summary.pros.map((pro, index) => <li key={index}>{pro}</li>)}
         </ul>
-        <h3>Cons:</h3>
-        <ul>
+        <h3>People Don’t Like:</h3>
+        <ul className="cons">
           {summary && summary.cons && summary.cons.map((con, index) => <li key={index}>{con}</li>)}
         </ul>
         <a href={url} target="_blank" rel="noopener noreferrer" className="listing-link">

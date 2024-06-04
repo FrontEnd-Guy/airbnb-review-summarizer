@@ -7,6 +7,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import SummaryDisplay from '../../components/SummaryDisplay/SummaryDisplay';
 
 import './Main.scss';
+import MapComponent from '../../components/MapComponent/MapComponent';
 
 const Main = () => {
   const { error, currentSummary, isLoading } = useSelector((state) => state.summary);
@@ -19,6 +20,7 @@ const Main = () => {
       {(currentSummary.summary.pros.length > 0 || currentSummary.summary.cons.length > 0) && (
         <SummaryDisplay summary={currentSummary} />
       )}
+      <MapComponent />
     </main>
   );
 };
