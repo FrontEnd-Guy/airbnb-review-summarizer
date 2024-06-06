@@ -20,7 +20,7 @@ const Main = () => {
       {(currentSummary.summary.pros.length > 0 || currentSummary.summary.cons.length > 0) && (
         <SummaryDisplay summary={currentSummary} />
       )}
-      <MapComponent />
+      <MapComponent lat={currentSummary.lat} lng={currentSummary.lng} />
     </main>
   );
 };
