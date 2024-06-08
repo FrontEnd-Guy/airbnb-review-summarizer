@@ -8,29 +8,50 @@ async function summarizeReviews(reviews) {
     throw new NoReviewsError('No reviews available to summarize.');
   }
 
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ 
+    model: "gemini-1.5-flash", 
+    generationConfig: { 
+      responseMimeType: "application/json", 
+      responseSchema: {
+        "type": "object",
+        "properties": {
+          "pros": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["pros", "cons"]
+      }
+    } 
+  });
 
   let prompt = `
   Summarize the following reviews into two distinct lists titled 'Pros' and 'Cons'. 
-  For 'Pros', list all the positive aspects mentioned in the reviews. 
-  For 'Cons', list all the negative aspects mentioned in the reviews.
+  For 'Pros', list the positive aspects mentioned in the reviews. 
+  For 'Cons', list the negative aspects mentioned in the reviews.
   Format your response as a JSON object with keys 'pros' and 'cons'.
-  Do not mix positive and negative points in the same bullet.
   Each point should be concise and directly extracted from the reviews where possible.
   Limit each list to a maximum of 10 bullet points.
-
-  YOU MUST NOT USE MARKDOWN NOR LATEX!
-
+  Do not use Markdown or LaTeX.
+  
   Here are the reviews:
-`;
-
-reviews.forEach((review, index) => {
-  prompt += `\nReview ${index + 1}: ${review}\n`;
-});
-
-prompt += `
-  Based on these reviews, create a summary with the following format:
-
+  `;
+  
+  reviews.forEach((review, index) => {
+    prompt += `\nReview ${index + 1}: ${review}\n`;
+  });
+  
+  prompt += `
+  Based on these reviews, create a JSON object with the following format:
+  
   {
     "pros": [
       "Positive aspect 1",
@@ -41,10 +62,10 @@ prompt += `
       "Negative aspect 2"
     ]
   }
-
+  
   Replace the placeholder text with actual points from the reviews.
   Ensure the lists are concise and limited to the most important points.
-`;
+  `;
 
   try {
     const result = await model.generateContent(prompt);

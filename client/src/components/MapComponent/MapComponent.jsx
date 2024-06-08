@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import {
   GoogleMap,
   LoadScript,
   Marker,
-  Autocomplete,
   DirectionsRenderer,
+  Autocomplete,
 } from '@react-google-maps/api';
 
 const containerStyle = {
@@ -19,14 +20,17 @@ const mapOptions = {
   zoomControl: true,
 };
 
-function MapComponent({ lat, lng }) {
+function MapComponent() {
+  const { lat, lng } = useSelector((state) => state.summary.currentSummary);
+
   const [map, setMap] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
   const [error, setError] = useState('');
   const [destination, setDestination] = useState(null);
-  const destinationRef = useRef(null);
+  const [travelMode, setTravelMode] = useState('DRIVING');
+  const [modalOpen, setModalOpen] = useState(false);
   const autocompleteRef = useRef(null);
 
   const numericLat = parseFloat(lat);
@@ -55,7 +59,7 @@ function MapComponent({ lat, lng }) {
     if (autocompleteRef.current) {
       const place = autocompleteRef.current.getPlace();
       if (!place || !place.geometry || !place.geometry.location) {
-        return; // Do nothing if place is not valid
+        return;
       }
       setDestination(place.geometry.location);
     }
@@ -70,7 +74,7 @@ function MapComponent({ lat, lng }) {
       const results = await directionsService.route({
         origin: center,
         destination: destination,
-        travelMode: window.google.maps.TravelMode.DRIVING,
+        travelMode: window.google.maps.TravelMode[travelMode],
       });
       setDirectionsResponse(results);
       setDistance(results.routes[0].legs[0].distance.text);
@@ -85,6 +89,14 @@ function MapComponent({ lat, lng }) {
     }
   }
 
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_KEY} libraries={libraries}>
       <GoogleMap
@@ -92,7 +104,7 @@ function MapComponent({ lat, lng }) {
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={mapOptions}>
-        {numericLat && numericLng && <Marker position={center} visible={true} />}
+        {!isNaN(numericLat) && !isNaN(numericLng) && <Marker position={center} />}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
         <div
           style={{
@@ -103,18 +115,7 @@ function MapComponent({ lat, lng }) {
             left: 10,
             zIndex: 1,
           }}>
-          <Autocomplete
-            onLoad={(ref) => (autocompleteRef.current = ref)}
-            onPlaceChanged={onPlaceChanged}
-            bounds={{
-              north: numericLat + 0.1,
-              south: numericLat - 0.1,
-              east: numericLng + 0.1,
-              west: numericLng - 0.1,
-            }}>
-            <input type="text" placeholder="Destination" ref={destinationRef} />
-          </Autocomplete>
-          <button onClick={calculateRoute}>Calculate Route</button>
+          <button onClick={openModal}>Add Destination</button>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <div>
             <h3>Distance: {distance}</h3>
@@ -122,6 +123,114 @@ function MapComponent({ lat, lng }) {
           </div>
         </div>
       </GoogleMap>
+
+      {modalOpen && (
+        <div className="commutes-modal-container" onClick={closeModal}>
+          <div
+            className="commutes-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="add-edit-heading"
+            onClick={(e) => e.stopPropagation()}>
+            <div className="content">
+              <h2 id="add-edit-heading" className="heading">
+                Add destination
+              </h2>
+              <form id="destination-form">
+                <Autocomplete
+                  onLoad={(ref) => (autocompleteRef.current = ref)}
+                  onPlaceChanged={onPlaceChanged}
+                  options={{
+                    bounds: {
+                      north: numericLat + 0.1,
+                      south: numericLat - 0.1,
+                      east: numericLng + 0.1,
+                      west: numericLng - 0.1,
+                    },
+                    fields: ['place_id', 'geometry', 'name'],
+                  }}>
+                  <input
+                    type="text"
+                    id="destination-address-input"
+                    name="destination-address"
+                    placeholder="Enter a place or address"
+                    autoComplete="off"
+                    required
+                  />
+                </Autocomplete>
+                <div className="travel-modes">
+                  <input
+                    type="radio"
+                    name="travel-mode"
+                    id="driving-mode"
+                    value="DRIVING"
+                    checked={travelMode === 'DRIVING'}
+                    onChange={() => setTravelMode('DRIVING')}
+                  />
+                  <label htmlFor="driving-mode" className="left-label" title="Driving travel mode">
+                    <svg aria-label="Driving icon">
+                      <use href="#commutes-driving-icon" />
+                    </svg>
+                  </label>
+                  <input
+                    type="radio"
+                    name="travel-mode"
+                    id="transit-mode"
+                    value="TRANSIT"
+                    checked={travelMode === 'TRANSIT'}
+                    onChange={() => setTravelMode('TRANSIT')}
+                  />
+                  <label htmlFor="transit-mode" title="Public transit travel mode">
+                    <svg aria-label="Public transit icon">
+                      <use href="#commutes-transit-icon" />
+                    </svg>
+                  </label>
+                  <input
+                    type="radio"
+                    name="travel-mode"
+                    id="bicycling-mode"
+                    value="BICYCLING"
+                    checked={travelMode === 'BICYCLING'}
+                    onChange={() => setTravelMode('BICYCLING')}
+                  />
+                  <label htmlFor="bicycling-mode" title="Bicycling travel mode">
+                    <svg aria-label="Bicycling icon">
+                      <use href="#commutes-bicycling-icon" />
+                    </svg>
+                  </label>
+                  <input
+                    type="radio"
+                    name="travel-mode"
+                    id="walking-mode"
+                    value="WALKING"
+                    checked={travelMode === 'WALKING'}
+                    onChange={() => setTravelMode('WALKING')}
+                  />
+                  <label htmlFor="walking-mode" className="right-label" title="Walking travel mode">
+                    <svg aria-label="Walking icon">
+                      <use href="#commutes-walking-icon" />
+                    </svg>
+                  </label>
+                </div>
+              </form>
+              <div className="modal-action-bar">
+                <button className="cancel-button" type="reset" onClick={closeModal}>
+                  Cancel
+                </button>
+                <button
+                  className="add-destination-button"
+                  type="button"
+                  onClick={() => {
+                    calculateRoute();
+                    closeModal();
+                  }}>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </LoadScript>
   );
 }

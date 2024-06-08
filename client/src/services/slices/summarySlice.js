@@ -7,17 +7,30 @@ export const fetchSummary = createAsyncThunk(
   async (url, { rejectWithValue }) => {
     try {
       const response = await axios.post(SUMMARIZE_API_URL, { url });
-      return {...response.data, url};
+      return { ...response.data, url };
     } catch (error) {
-      console.error(error); 
-      return rejectWithValue(error.response?.data.error || 'Error fetching summary.');
+      console.error(error);
+      return rejectWithValue(
+        error.response?.data?.error || error.message || 'Error fetching summary.'
+      );
     }
+  }
+);
+
+const getDefaultSummary = () => ({
+  summary: { pros: [], cons: [] },
+  totalReviews: null,
+  image: '',
+  name: '',
+  address: '',
+  lat: null,
+  lng: null,
 });
 
-const getDefaultSummary = () => ({ summary: { pros: [], cons: [] }, totalReviews: null, image: '', name: '', address: '', lat: null, lng: null});
+const LOCAL_STORAGE_HISTORY_KEY = 'history';
 
-const persistedHistory = localStorage.getItem('history')
-  ? JSON.parse(localStorage.getItem('history'))
+const persistedHistory = localStorage.getItem(LOCAL_STORAGE_HISTORY_KEY)
+  ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_HISTORY_KEY))
   : [];
 
 const initialState = {
@@ -49,15 +62,15 @@ const summarySlice = createSlice({
         const existingIndex = state.history.findIndex(item => item.url === action.payload.url);
         if (existingIndex >= 0) {
           state.history.splice(existingIndex, 1);
-        } else if (state.history.length > 5) {
-            state.history.pop();
-          }
-        
+        } else if (state.history.length >= 5) {
+          state.history.pop();
+        }
+
         state.history.unshift(action.payload);
 
         state.isLoading = false;
         state.error = null;
-        localStorage.setItem('history', JSON.stringify(state.history));
+        localStorage.setItem(LOCAL_STORAGE_HISTORY_KEY, JSON.stringify(state.history));
       })
       .addCase(fetchSummary.rejected, (state, action) => {
         state.isLoading = false;

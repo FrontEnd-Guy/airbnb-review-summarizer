@@ -83,18 +83,17 @@
       content.innerHTML = `<p>${data.error}</p>`;
     } else {
       const summaryHtml = `
-        <h2>What ${data.totalReviews} people say:</h2>
-        <p>${convertMarkdownToHtml(data.summary)}</p>
+        <h2>Summary of ${data.totalReviews} Reviews:</h2>
+        <h3>People liked:</h3>
+        <ul>
+          ${data.summary.pros.map(pro => `<li>${pro}</li>`)}
+        </ul>
+        <h3>People didn't like:</h3>
+        <ul>
+          ${data.summary.cons.map(con => `<li>${con}</li>`)}
+        </ul>
       `;
       content.innerHTML = summaryHtml;
     }
-  }
-
-  function convertMarkdownToHtml(markdown) {
-    let html = markdown
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/^- (.*)$/gm, '<li>$1</li>');
-    html = html.replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>');
-    return html;
   }
 })();
