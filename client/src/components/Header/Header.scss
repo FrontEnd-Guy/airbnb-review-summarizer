@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .logo-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      color: var(--primary-color);
+    }
+
+    p {
+      font-family: 'Roboto Mono', monospace;
+      font-weight: 700;
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.2; 
+    }
+  }
+
+  .link {
+    margin-left: 15px;
+  }
+}

@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #E91E63;
+  --primary-color-light: #fdeff3;
+  --primary-color-dark: #e3004a;
+  --background-color: #fff;
+  --text-color: #0a0a21;
+  --error-color: #D8000C;
+  --border-color: #ddd;
+  --footer-color: #888;
+  --positive-color: #4caf50;
+  --negative-color: #f44336;
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+}

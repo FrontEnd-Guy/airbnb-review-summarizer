@@ -1,0 +1,81 @@
+#summaryButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+#summaryButton:hover {
+  transform: scale(1.1);
+}
+
+
+#sidebar {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: #f9f9f9;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+#header {
+  background-color: black;
+  color: white;
+  padding: 15px;
+  font-size: 20px;
+  text-align: center;
+}
+#content {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+}
+.loading-text {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 18px;
+}
+#footer {
+  padding: 10px;
+  background-color: #ddd;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+ul {
+  padding-left: 20px;
+}
+li {
+  margin-bottom: 10px;
+}
+
+#closeSidebar {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+#closeSidebar:hover {
+  opacity: 0.8;
+}

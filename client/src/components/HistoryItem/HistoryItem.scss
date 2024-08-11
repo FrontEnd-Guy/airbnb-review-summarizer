@@ -1,0 +1,31 @@
+.history-item {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  &__info {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    h3 {
+      font-size: 16px;
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--footer-color);
+      margin: 0;
+    }
+  }
+}

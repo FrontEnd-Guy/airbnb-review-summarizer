@@ -1,0 +1,35 @@
+.app {
+  color: var(--text-color);
+  font-size: 16px; 
+  line-height: 1.6;
+  padding: 10px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .link {
+    position: relative;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-block;
+  
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0; 
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-color);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  
+    &:hover::after {
+      opacity: 1;
+    }
+  }
+  
+}

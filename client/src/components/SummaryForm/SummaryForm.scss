@@ -1,0 +1,79 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  background-color: var(--background-color);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.95);
+  overflow: hidden;
+
+  transition: box-shadow 0.3s ease;
+
+  &:focus-within {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+  input {
+    width: 100%;
+    padding: 0 50px;
+    border: none;
+    background-color: transparent;
+    height: 52px;
+    max-height: 200px;
+    overflow-y: hidden;
+    transition: box-shadow 0.3s;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .paste-button, .send-button {
+    all: unset;
+    padding: 3px;
+    width: 28px;
+    height: 28px;
+    border-radius: .5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  .paste-button {
+    left: 0.5rem;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  .send-button {
+    right: 0.5rem;
+    background-color: var(--primary-color);
+    transition: all .3s ease-in-out;
+    
+    &:hover {
+      background-color: var(--primary-color-dark);
+    }
+  }
+}
